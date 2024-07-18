@@ -1,30 +1,15 @@
-# React + TypeScript + Vite
+# Форма поиска данных
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Деплой:https://3205-front.vercel.app
+Бэкенд:https://github.com/ingvr94/3205_back
 
-Currently, two official plugins are available:
+Фронт проекта реализован на React и Typescript, для стилизации применяется библиотека Bootstrap. Он представляет собой форму с 3мя элементами: 
+- обязательное поле ввода e-mail. При попытке отправки пустого поля или если вводимый адрес эл. почты не валиден, оно подсвечивается красным, и возникает сообщение об ошибке;
+- необязательное поле ввода number, в котором используется маска для ввода 6ти цифр c дефисом после каждых 2х знаков. В поле можно ввести только цифры в кол-ве не более 6ти.
+- кнопка Отправить для отправки post-запроса на сервер с данными формами.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+После заполнения формы корректными данными и нажатии кнопки Отправить, данные отправляются на сервер, реализованный на Node.js (при помощи библиотеки Express.js) и TypeScript. После получения данных сервер производит их сравнение с данными из заданного json файла (здесь data.json) и при их совпадении записывает их в новый массив. Далее c данным массивом он формирует ответ на post-запрос с задержкой в 5 секунд.
 
-## Expanding the ESLint configuration
+Во время ожидания ответа с сервера на фронте под формой показывается спиннер. В случае удачной загрузки под формой показывается список найденных совпадающих значений или, если совпадений нет, показывается строка с сообщением 'Данные не найдены.'. в случае неудачного запроса показывается сообщение 'Ошибка загрузки', и ошибка выводится в консоль.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
